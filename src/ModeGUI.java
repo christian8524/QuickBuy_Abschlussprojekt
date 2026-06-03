@@ -37,7 +37,10 @@ public class ModeGUI {
             @Override
             public void handle(ActionEvent event) {
 
-
+                if (controller.getManager().isEmpty()) {
+                    System.out.println("Bitte zuerst Produkte anlegen!");
+                    return;
+                }
 
                 // Eingabefenster für Guthaben
                 TextInputDialog dialog = new TextInputDialog();
