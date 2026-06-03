@@ -4,8 +4,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class ModeGUI {
 
@@ -20,32 +23,44 @@ public class ModeGUI {
         Button adminButton = new Button("Admin");
         Button nutzerButton = new Button("Nutzer");
 
-        adminButton.setOnAction(e -> {
-            controller.startAdmin();
-            System.out.println("Admin-Modus gestartet");
+        // ADMIN BUTTON (ohne Lambda)
+        adminButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                controller.startAdmin();
+                System.out.println("Admin-Modus gestartet");
+            }
         });
 
-        nutzerButton.setOnAction(e -> {
-            if (controller.getManager().isEmpty()) {
-                System.out.println("Bitte zuerst Produkte anlegen!");
-                return;
+        // NUTZER BUTTON (ohne Lambda)
+        nutzerButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+
+
+                // Eingabefenster für Guthaben
+                TextInputDialog dialog = new TextInputDialog();
+                dialog.setTitle("Guthaben");
+                dialog.setHeaderText("Startguthaben eingeben:");
+                dialog.setContentText("Guthaben:");
+
+                Optional<String> result = dialog.showAndWait();
+
+                // ifPresent ohne Lambda
+                result.ifPresent(new Consumer<String>() {
+                    @Override
+                    public void accept(String input) {
+                        try {
+                            float guthaben = Float.parseFloat(input);
+                            controller.startNutzer(guthaben);
+                            System.out.println("Nutzer-Modus gestartet");
+                        } catch (NumberFormatException ex) {
+                            System.out.println("Ungültige Eingabe");
+                        }
+                    }
+                });
             }
-
-            TextInputDialog dialog = new TextInputDialog();
-            dialog.setTitle("Guthaben");
-            dialog.setHeaderText("Startguthaben eingeben:");
-            dialog.setContentText("Guthaben:");
-
-            Optional<String> result = dialog.showAndWait();
-            result.ifPresent(input -> {
-                try {
-                    float guthaben = Float.parseFloat(input);
-                    controller.startNutzer(guthaben);
-                    System.out.println("Nutzer-Modus gestartet");
-                } catch (NumberFormatException ex) {
-                    System.out.println("Ungültige Eingabe");
-                }
-            });
         });
 
         VBox layout = new VBox(20, adminButton, nutzerButton);
@@ -57,4 +72,3 @@ public class ModeGUI {
         stage.show();
     }
 }
-
