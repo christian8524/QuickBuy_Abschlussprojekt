@@ -23,7 +23,7 @@ public class ModeGUI {
         Button adminButton = new Button("Admin");
         Button nutzerButton = new Button("Nutzer");
 
-        // ADMIN BUTTON (ohne Lambda)
+        // ADMIN BUTTON
         adminButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -32,15 +32,12 @@ public class ModeGUI {
             }
         });
 
-        // NUTZER BUTTON (ohne Lambda)
+        // NUTZER BUTTON
         nutzerButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
 
-                if (controller.getManager().isEmpty()) {
-                    System.out.println("Bitte zuerst Produkte anlegen!");
-                    return;
-                }
+
 
                 // Eingabefenster für Guthaben
                 TextInputDialog dialog = new TextInputDialog();
@@ -48,21 +45,20 @@ public class ModeGUI {
                 dialog.setHeaderText("Startguthaben eingeben:");
                 dialog.setContentText("Guthaben:");
 
+
                 Optional<String> result = dialog.showAndWait();
 
-                // ifPresent ohne Lambda
-                result.ifPresent(new Consumer<String>() {
-                    @Override
-                    public void accept(String input) {
-                        try {
-                            float guthaben = Float.parseFloat(input);
-                            controller.startNutzer(guthaben);
-                            System.out.println("Nutzer-Modus gestartet");
-                        } catch (NumberFormatException ex) {
-                            System.out.println("Ungültige Eingabe");
-                        }
+                if (result.isPresent()) {
+                    String input = result.get();
+
+                    try {
+                        float guthaben = Float.parseFloat(input);
+                        controller.startNutzer(guthaben);
+                        System.out.println("Nutzer-Modus gestartet");
+                    } catch (NumberFormatException ex) {
+                        System.out.println("Ungültige Eingabe");
                     }
-                });
+                }
             }
         });
 
