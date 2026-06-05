@@ -32,6 +32,14 @@ public class NutzerGUI {
         }
     }
 
+    private void ladeWarenkorb() {
+        warenkorbListe.getItems().clear();
 
+        for (Product product : nutzer.getWarenkorb()) {
+            warenkorbListe.getItems().add(
+                    product.getName() + " | " + product.getPreis() + "€"
+            );
+        }
+    }
 
 }
