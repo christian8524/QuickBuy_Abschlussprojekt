@@ -56,7 +56,10 @@ public class ModeGUI {
 
                     try {
                         float guthaben = Float.parseFloat(input);
-                        controller.startNutzer(guthaben);
+
+                        Nutzer nutzer = controller.startNutzer(guthaben);
+                        new NutzerGUI(controller.getManager(), nutzer).show(stage);
+
                         System.out.println("Nutzer-Modus gestartet");
                     } catch (NumberFormatException ex) {
                         System.out.println("Ungültige Eingabe");
