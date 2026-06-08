@@ -32,7 +32,8 @@ public class NutzerGUI {
 
         Button inWarenkorbButton = new Button("In Warenkorb legen");
         Button bezahlenButton = new Button("Bezahlen");
-        Button warenkorbLeerenButton = new Button("Warenkorb leeren");;
+        Button warenkorbLeerenButton = new Button("Warenkorb leeren");
+        Button zurückButton = new Button("Zurück");
 
         ladeProdukte();
         updateLabels();
@@ -91,6 +92,12 @@ public class NutzerGUI {
             zeigeMeldung("Warenkorb geleert", "Der Warenkorb wurde geleert.");
         });
 
+        // Zurück zum Hauptmenü
+        zurückButton.setOnAction(e -> {
+            ModeController controller = new ModeController(manager);
+            new ModeGUI(controller).show(stage);
+        });
+
         Label produktLabel = new Label("Produkte:");
         Label warenkorbLabel = new Label("Warenkorb:");
 
@@ -104,7 +111,8 @@ public class NutzerGUI {
                 warenkorbListe,
                 gesamtLabel,
                 bezahlenButton,
-                warenkorbLeerenButton
+                warenkorbLeerenButton,
+                zurückButton
         );
 
         layout.setAlignment(Pos.CENTER);
