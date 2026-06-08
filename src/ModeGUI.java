@@ -10,8 +10,6 @@ import javafx.event.EventHandler;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-import static jdk.internal.org.jline.terminal.Terminal.MouseTracking.Button;
-
 public class ModeGUI {
 
     private ModeController controller;
@@ -29,11 +27,7 @@ public class ModeGUI {
         adminButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
-                Admin admin = controller.startAdmin();
-
-                new AdminGUI(admin).show(stage);
-
+                controller.startAdmin();
                 System.out.println("Admin-Modus gestartet");
             }
         });
