@@ -8,11 +8,6 @@ public class Main extends Application {
         ProductManager manager = new ProductManager();
         ModeController controller = new ModeController(manager);
 
-        /*
-        War zum testen
-        manager.createProduct("Apfel", 1.5f, 1);
-        manager.createProduct("Brot", 2.0f, 2);
-         */
 
 
         new ModeGUI(controller).show(primaryStage);
