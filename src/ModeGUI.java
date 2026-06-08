@@ -27,7 +27,11 @@ public class ModeGUI {
         adminButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                controller.startAdmin();
+
+                Admin admin = controller.startAdmin();
+
+                new AdminGUI(admin).show(stage);
+
                 System.out.println("Admin-Modus gestartet");
             }
         });
