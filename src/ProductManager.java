@@ -16,8 +16,11 @@ public class ProductManager {
     public boolean updateProduct(int id, String newName, float newPrice) {
         for (Product p : products) {
             if (p.getId() == id) {
-                p.setName(newName);
-                p.setPreis(newPrice);
+
+                    p.setName(newName);
+
+                    p.setPreis(newPrice);
+
                 return true;
             }
         }
