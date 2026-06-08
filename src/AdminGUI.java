@@ -16,8 +16,10 @@ public class AdminGUI {
 
     public void show(Stage stage) {
 
+        // Produktliste
         produktListe = new ListView<>();
 
+        // Eingabefelder
         TextField nameField = new TextField();
         nameField.setPromptText("Produktname");
 
@@ -27,15 +29,20 @@ public class AdminGUI {
         TextField idField = new TextField();
         idField.setPromptText("ID");
 
+        // Buttons
         Button createButton = new Button("Produkt erstellen");
         Button updateButton = new Button("Produkt bearbeiten");
         Button deleteButton = new Button("Produkt löschen");
+        Button zurückButton = new Button("Zurück");
 
+        // Vorhandene Produkte laden
         ladeProdukte();
 
-        // CREATE
+        // Produkt erstellen
         createButton.setOnAction(e -> {
+
             try {
+
                 String name = nameField.getText();
                 float preis = Float.parseFloat(preisField.getText());
                 int id = Integer.parseInt(idField.getText());
@@ -48,15 +55,19 @@ public class AdminGUI {
                 preisField.clear();
                 idField.clear();
 
+                zeigeMeldung("Erfolg", "Produkt wurde erstellt.");
+
             } catch (Exception ex) {
+
                 zeigeMeldung("Fehler", "Ungültige Eingabe");
             }
         });
 
-        // UPDATE
+        // Produkt bearbeiten
         updateButton.setOnAction(e -> {
 
             try {
+
                 int id = Integer.parseInt(idField.getText());
                 String neuerName = nameField.getText();
                 float neuerPreis = Float.parseFloat(preisField.getText());
@@ -65,26 +76,43 @@ public class AdminGUI {
 
                 ladeProdukte();
 
+                zeigeMeldung("Erfolg", "Produkt wurde bearbeitet.");
+
             } catch (Exception ex) {
+
                 zeigeMeldung("Fehler", "Ungültige Eingabe");
             }
         });
 
-        // DELETE
+        // Produkt löschen
         deleteButton.setOnAction(e -> {
 
             try {
+
                 int id = Integer.parseInt(idField.getText());
 
                 admin.deleteProduct(id);
 
                 ladeProdukte();
 
+                zeigeMeldung("Erfolg", "Produkt wurde gelöscht.");
+
             } catch (Exception ex) {
+
                 zeigeMeldung("Fehler", "Ungültige ID");
             }
         });
 
+        // Zurück zum Hauptmenü
+        zurückButton.setOnAction(e -> {
+
+            ModeController controller =
+                    new ModeController(admin.getManager());
+
+            new ModeGUI(controller).show(stage);
+        });
+
+        // Layout erstellen
         VBox layout = new VBox(
                 10,
                 new Label("Produkte"),
@@ -94,11 +122,13 @@ public class AdminGUI {
                 idField,
                 createButton,
                 updateButton,
-                deleteButton
+                deleteButton,
+                zurückButton
         );
 
         layout.setAlignment(Pos.CENTER);
 
+        // Fenster erstellen
         Scene scene = new Scene(layout, 500, 600);
 
         stage.setTitle("QuickBuy - Adminbereich");
@@ -106,11 +136,14 @@ public class AdminGUI {
         stage.show();
     }
 
+    // Alle Produkte anzeigen
     private void ladeProdukte() {
 
         produktListe.getItems().clear();
 
-        for (Product p : admin.getAllProducts()) {
+        for (int i = 0; i < admin.getAllProducts().size(); i++) {
+
+            Product p = admin.getAllProducts().get(i);
 
             produktListe.getItems().add(
                     "ID: " + p.getId()
@@ -122,6 +155,7 @@ public class AdminGUI {
         }
     }
 
+    // Meldung anzeigen
     private void zeigeMeldung(String titel, String text) {
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
