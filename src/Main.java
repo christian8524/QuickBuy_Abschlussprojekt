@@ -9,7 +9,6 @@ public class Main extends Application {
         ModeController controller = new ModeController(manager);
 
 
-
         new ModeGUI(controller).show(primaryStage);
     }
 

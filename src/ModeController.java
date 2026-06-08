@@ -19,5 +19,7 @@ public class ModeController {
     public Nutzer startNutzer(float guthaben) {
         return new Nutzer(guthaben);
     }
+
+
 }
 
