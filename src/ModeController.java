@@ -10,9 +10,10 @@ public class ModeController {
         return manager;
     }
 
-    public void startAdmin() {
+    public Admin startAdmin() {
         Admin admin = new Admin(manager);
 
+        return admin;
     }
 
     public Nutzer startNutzer(float guthaben) {

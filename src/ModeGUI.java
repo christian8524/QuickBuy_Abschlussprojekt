@@ -53,7 +53,7 @@ public class ModeGUI {
                 dialog.setContentText("Guthaben:");
 
 
-                Optional<String> result = dialog.showAndWait();
+                Optional<String> result = dialog.showAndWait();//Optional weil Benutzer auch nichts eingeben kann
 
                 if (result.isPresent()) {
                     String input = result.get();
@@ -65,7 +65,7 @@ public class ModeGUI {
                         new NutzerGUI(controller.getManager(), nutzer).show(stage);
 
                         System.out.println("Nutzer-Modus gestartet");
-                    } catch (NumberFormatException ex) {
+                    } catch (NumberFormatException e) {
                         System.out.println("Ungültige Eingabe");
                     }
                 }
