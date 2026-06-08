@@ -45,15 +45,15 @@ public class AdminGUI {
 
                 String name = nameField.getText();
                 float preis = Float.parseFloat(preisField.getText());
-                int id = Integer.parseInt(idField.getText());
+                //int id = Integer.parseInt(idField.getText());
 
-                admin.createProduct(name, preis, id);
+                admin.createProduct(name, preis, 0);
 
                 ladeProdukte();
 
                 nameField.clear();
                 preisField.clear();
-                idField.clear();
+                //idField.clear();
 
                 zeigeMeldung("Erfolg", "Produkt wurde erstellt.");
 
